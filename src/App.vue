@@ -1,30 +1,27 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <Navbar v-if="isLoggedIn" class="navbar-left" />
+    <router-view />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
+<script setup lang="ts">
+import Navbar from "./components/appNavbar.vue";
+import { isLoggedIn, checkAuthStatus } from "./composables/useAuth";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+router.beforeEach(async (to, from, next) => {
+  await checkAuthStatus();
+  next();
+});
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.navbar-left {
+  position: fixed;
+  top: 0.5%;
+  left: 0.5%;
 }
 </style>
