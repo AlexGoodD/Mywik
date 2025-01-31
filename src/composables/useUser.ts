@@ -1,8 +1,8 @@
-// src/composables/useUser.ts
 import { ref, onMounted } from "vue";
 import { supabase } from "../utils/supabase";
 
 export function useUser() {
+    const userId = ref("");
     const userName = ref("");
     const userEmail = ref("");
 
@@ -18,6 +18,7 @@ export function useUser() {
         }
 
         if (user) {
+            userId.value = user.id;
             const { data, error } = await supabase
                 .from("users")
                 .select("name, email")
@@ -37,6 +38,7 @@ export function useUser() {
     });
 
     return {
+        userId,
         userName,
         userEmail,
     };
