@@ -54,6 +54,7 @@ async function logout() {
 .user-info {
   margin-bottom: 2rem;
   text-align: center;
+  color: black;
 }
 
 .search-bar {
@@ -72,6 +73,7 @@ async function logout() {
   padding: 0;
   margin: 0;
   flex-grow: 1;
+  color: #575757;
 }
 
 .nav-items li {
@@ -90,6 +92,7 @@ async function logout() {
   padding: 1rem 0;
   margin: 0;
   flex-grow: 1;
+  color: #575757;
 }
 
 .nav-bottom-items li {
