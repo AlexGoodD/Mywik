@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AuthView from '../views/authView.vue';
 import HomeView from '../views/homeView.vue';
 import DashboardView from '../views/dashboardView.vue';
+import SchedulePage from '../components/Schedule/schedulePage.vue';
 import { supabase } from '../utils/supabase';
 import { checkAuthStatus } from '../composables/useAuth';
 
@@ -9,6 +10,7 @@ const routes = [
     { path: '/', component: HomeView },
     { path: '/auth', component: AuthView },
     { path: '/dashboard', component: DashboardView, meta: { requiresAuth: true } },
+    { path: '/schedule/:scheduleId', name: 'SchedulePage', component: SchedulePage, meta: { requiresAuth: true } },
 ];
 
 const router = createRouter({
