@@ -1,6 +1,8 @@
 <template>
   <div>
     <table-schedule :schedule-id="scheduleId" />
+    <ButtonCreate @click="showFormEvent = true" />
+    <formEvents v-if="showFormEvent" @close="showFormEvent = false" />
   </div>
 </template>
 
@@ -8,6 +10,10 @@
 import { ref, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import TableSchedule from "./tableSchedule.vue";
+
+import ButtonCreate from "../../components/items/createButton.vue";
+import formEvents from "../events/formEvents.vue";
+const showFormEvent = ref(false);
 
 const route = useRoute();
 const scheduleId = ref(

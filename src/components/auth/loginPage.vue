@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
 import { handleLogin } from "../../services/auth.ts";
 import { useRouter } from "vue-router";
 

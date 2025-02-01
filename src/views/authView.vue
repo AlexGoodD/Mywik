@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import RegisterPage from "../components/authPage/registerPage.vue";
-import LoginPage from "../components/authPage/loginPage.vue";
+import RegisterPage from "../components/auth/registerPage.vue";
+import LoginPage from "../components/auth/loginPage.vue";
 
 const isLogin = ref(true);
 

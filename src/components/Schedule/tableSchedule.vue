@@ -10,7 +10,14 @@
       <tbody>
         <tr v-for="slot in timeSlots" :key="slot.start">
           <td class="slot-time">{{ slot.start }} - {{ slot.end }}</td>
-          <td v-for="day in days" :key="day" class="slot-event"></td>
+          <td
+            v-for="day in days"
+            :key="day"
+            class="slot-event"
+            :style="getEventStyle(slot, day)"
+          >
+            {{ getEventTitle(slot, day) }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -22,6 +29,11 @@ import { ref, onMounted, watch } from "vue";
 import { getSchedules } from "../../services/schedule";
 import { generateTimeSlots } from "../../utils/timeSlots";
 import { defineProps } from "vue";
+import {
+  fetchEvents,
+  getEventStyle,
+  getEventTitle,
+} from "../../composables/useEventSlots";
 
 const props = defineProps<{ scheduleId: string }>();
 
@@ -40,9 +52,7 @@ const schedules = ref<Schedule[]>([]);
 
 const fetchSchedule = async (scheduleId: string) => {
   schedules.value = await getSchedules();
-  console.log("Schedules fetched:", schedules.value);
   const schedule = schedules.value.find((s) => s.id === scheduleId);
-  console.log("Schedule found:", schedule);
 
   if (schedule) {
     timeSlots.value = generateTimeSlots(
@@ -50,18 +60,19 @@ const fetchSchedule = async (scheduleId: string) => {
       schedule.end_date,
       schedule.interval
     );
-    console.log("Time slots generated:", timeSlots.value);
   }
 };
 
 onMounted(() => {
   fetchSchedule(props.scheduleId);
+  fetchEvents(props.scheduleId);
 });
 
 watch(
   () => props.scheduleId,
   (newId) => {
     fetchSchedule(newId);
+    fetchEvents(newId);
   }
 );
 </script>

@@ -1,43 +1,34 @@
 <template>
-  <div>
-    <schedule-item
+  <div class="grid-schedule">
+    <scheduleItem
       v-for="schedule in userSchedules"
       :key="schedule.id"
       :schedule="schedule"
       @navigate="navigateToSchedule"
+      class="schedule-item"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { getSchedules } from "../../services/schedule";
-import { useUser } from "../../composables/useUser";
-import ScheduleItem from "./scheduleItem.vue";
-import { useRouter } from "vue-router";
-
-const { userId } = useUser();
-const router = useRouter();
-
-interface Schedule {
-  id: string;
-  user_id: string;
-  name: string;
-  start_date: string;
-  end_date: string;
-  interval: number;
-}
-
-const userSchedules = ref<Schedule[]>([]);
-
-onMounted(async () => {
-  const schedules = await getSchedules();
-  userSchedules.value = schedules.filter((schedule) => schedule.user_id === userId.value);
-});
-
-function navigateToSchedule(scheduleId: string) {
-  router.push({ name: "SchedulePage", params: { scheduleId } });
-}
+import { useSchedules } from "../../composables/useSchedules";
+import { useNavigation } from "../../composables/useNavigation";
+const { userSchedules } = useSchedules();
+const { navigateToSchedule } = useNavigation();
+import scheduleItem from "./scheduleItem.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+.grid-schedule {
+  display: flex;
+  gap: 2rem;
+}
+
+.schedule-item {
+  transition: transform 0.5s ease-in-out;
+}
+
+.schedule-item:hover {
+  transform: scale(1.1);
+}
+</style>

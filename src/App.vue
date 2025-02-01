@@ -1,14 +1,23 @@
 <template>
-  <div>
+  <div class="container">
+    <Navbar v-if="showNavbar" class="navbar-left" />
     <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import Navbar from "./components/appNavbar.vue";
 import { checkAuthStatus } from "./composables/useAuth";
-import { useRouter } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
+const showNavbar = ref(true);
+
+watch(route, (newRoute) => {
+  showNavbar.value = newRoute.path !== "/";
+});
 
 router.beforeEach(async (to, from, next) => {
   await checkAuthStatus();
@@ -16,4 +25,13 @@ router.beforeEach(async (to, from, next) => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  display: flex;
+}
+.navbar-left {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+</style>
