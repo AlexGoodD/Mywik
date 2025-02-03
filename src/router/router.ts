@@ -9,10 +9,10 @@ import { checkAuthStatus } from '../composables/useAuth';
 import { getSchedules } from '../services/schedule';
 
 const routes = [
-    { path: '/', component: HomeView },
+    { path: '/', component: HomeView, meta: { hideNavbar: true } },
     { path: '/auth', component: AuthView },
     { path: '/dashboard', component: DashboardView, meta: { requiresAuth: true } },
-    { path: '/dashboard/:scheduleId', name: 'SchedulePage', component: SchedulePage, meta: { requiresAuth: true } },
+    { path: '/dashboard/schedule/:scheduleId', name: 'SchedulePage', component: SchedulePage, meta: { requiresAuth: true } },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ];
 
