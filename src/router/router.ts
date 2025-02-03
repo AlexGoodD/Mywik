@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AuthView from '../views/authView.vue';
 import HomeView from '../views/homeView.vue';
 import DashboardView from '../views/dashboardView.vue';
-import SchedulePage from '../components/Schedule/schedulePage.vue';
+import SchedulePage from '../components/Schedule/pageSchedule.vue';
 import NotFound from '../components/utils/notFound.vue';
 import { supabase } from '../utils/supabase';
 import { checkAuthStatus } from '../composables/useAuth';
@@ -21,7 +21,7 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
     await checkAuthStatus();
     const { data: { user } } = await supabase.auth.getUser();
     if (to.matched.some(record => record.meta.requiresAuth) && !user) {
