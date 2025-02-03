@@ -6,22 +6,19 @@
         :menuOptions="menuOptions"
         @selectOption="handleMenuOption"
       />
-      <secondTopNavbar @createSchedule="showForm = true" @toggleView="toggleView" />
+      <secondTopNavbar
+        @createSchedule="$emit('createSchedule')"
+        @toggleView="toggleView"
+      />
     </div>
     <div class="schedule-container">
       <component
         :is="isGridView ? gridSchedule : listSchedule"
         class="schedule-view"
         @error="handleComponentError"
+        @editSchedule="$emit('editSchedule', $event)"
+        @deleteSchedule="$emit('deleteSchedule', $event)"
       />
-      <div v-if="showForm" class="overlay" @click="showForm = false">
-        <FormSchedule
-          @close="showForm = false"
-          @scheduleCreated="handleScheduleCreated"
-          class="form-schedule"
-          @click.stop
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -30,14 +27,10 @@
 import { ref } from "vue";
 import gridSchedule from "../../components/schedule/gridSchedule.vue";
 import listSchedule from "../../components/schedule/listSchedule.vue";
-import FormSchedule from "../../components/schedule/formSchedule.vue";
 import topNavbar from "../../components/utils/firstTopNavbar.vue";
 import secondTopNavbar from "./dashboardNavbar.vue";
-import { useSchedules } from "../../composables/useSchedules";
 
-const showForm = ref(false);
 const isGridView = ref(true);
-const { addSchedule } = useSchedules();
 
 const menuOptions = [
   { text: "Option 1", action: "option1" },
@@ -55,11 +48,6 @@ function handleComponentError(error: Error) {
 
 function handleMenuOption(option: { text: string; action: string }) {
   console.log(`Selected: ${option.text}`);
-}
-
-function handleScheduleCreated(schedule: any) {
-  addSchedule(schedule);
-  showForm.value = false;
 }
 </script>
 
@@ -88,13 +76,5 @@ function handleScheduleCreated(schedule: any) {
   border-bottom: 1px solid #d9d9d9;
   border-right: 1px solid #d9d9d9;
   border-radius: 0 0 1rem 0;
-}
-
-.form-schedule {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
 }
 </style>
