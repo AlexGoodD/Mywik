@@ -23,16 +23,11 @@
         <input v-model="color" type="color" id="color" required />
       </div>
       <div class="input-group">
-        <label for="day_of_week">Día de la Semana</label>
-        <select v-model="day_of_week" id="day_of_week" required>
-          <option value="Lunes">Lunes</option>
-          <option value="Martes">Martes</option>
-          <option value="Miércoles">Miércoles</option>
-          <option value="Jueves">Jueves</option>
-          <option value="Viernes">Viernes</option>
-          <option value="Sábado">Sábado</option>
-          <option value="Domingo">Domingo</option>
-        </select>
+        <label>Días de la Semana</label>
+        <div v-for="day in daysOfWeek" :key="day">
+          <input type="checkbox" :id="day" v-model="selectedDays" :value="day" />
+          <label :for="day">{{ day }}</label>
+        </div>
       </div>
       <button type="submit">Crear Evento</button>
     </form>
@@ -49,7 +44,16 @@ const description = ref("");
 const start_time = ref("");
 const end_time = ref("");
 const color = ref("#000000");
-const day_of_week = ref("Lunes");
+const daysOfWeek = [
+  "Lunes",
+  "Martes",
+  "Miércoles",
+  "Jueves",
+  "Viernes",
+  "Sábado",
+  "Domingo",
+];
+const selectedDays = ref<string[]>([]); // Estado reactivo para los días seleccionados
 const route = useRoute();
 const schedule_id = route.params.scheduleId as string;
 const emits = defineEmits(["close"]);
@@ -62,7 +66,7 @@ const handleSubmit = async () => {
     start_time: start_time.value,
     end_time: end_time.value,
     color: color.value,
-    day_of_week: day_of_week.value,
+    day_of_week: selectedDays.value, // Agregar los días seleccionados al objeto event
     created_at: new Date().toISOString(),
   };
 
