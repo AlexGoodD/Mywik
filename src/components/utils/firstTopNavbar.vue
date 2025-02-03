@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const props = defineProps<{
+defineProps<{
   title: string;
   menuOptions: { text: string; action: string }[];
 }>();
