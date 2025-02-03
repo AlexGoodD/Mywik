@@ -1,37 +1,28 @@
 <template>
-  <div class="container">
-    <Navbar v-if="showNavbar" class="navbar-left" />
+  <div v-if="isLoggedIn" class="container">
+    <Navbar v-if="!$route.meta.hideNavbar" class="navbar-left" />
+    <div class="content">
+      <router-view />
+    </div>
+  </div>
+  <div v-else class="container">
     <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import Navbar from "./components/appNavbar.vue";
-import { checkAuthStatus } from "./composables/useAuth";
-
-const router = useRouter();
-const route = useRoute();
-const showNavbar = ref(true);
-
-watch(route, (newRoute) => {
-  showNavbar.value = newRoute.path !== "/";
-});
-
-router.beforeEach(async (to, from, next) => {
-  await checkAuthStatus();
-  next();
-});
+import Navbar from "./components/leftNavbar.vue";
+import { isLoggedIn } from "./composables/useAuth";
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-}
 .navbar-left {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
+}
+.content {
+  overflow: none;
 }
 </style>
