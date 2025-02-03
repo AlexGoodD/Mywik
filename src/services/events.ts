@@ -7,7 +7,7 @@ interface Event {
     start_time: string;
     end_time: string;
     color: string;
-    day_of_week: string;
+    day_of_week: string[];
     created_at: string;
 }
 

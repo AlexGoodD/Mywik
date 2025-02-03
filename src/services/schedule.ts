@@ -3,9 +3,11 @@ import { supabase } from '../utils/supabase';
 interface Schedule {
     user_id: string;
     name: string;
-    start_date: number;
-    end_date: number;
+    description: string;
+    start_date: string;
+    end_date: string;
     interval: number;
+    days: string[];
     created_at?: string;
 }
 
