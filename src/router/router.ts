@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AuthView from '../views/authView.vue';
-import HomeView from '../views/homeView.vue';
 import DashboardView from '../views/dashboardView.vue';
 import SchedulePage from '../components/Schedule/pageSchedule.vue';
 import NotFound from '../components/utils/notFound.vue';
@@ -9,8 +8,7 @@ import { checkAuthStatus } from '../composables/useAuth';
 import { getSchedules } from '../services/schedule';
 
 const routes = [
-    { path: '/', component: HomeView, meta: { hideNavbar: true } },
-    { path: '/auth', component: AuthView },
+    { path: '/', component: AuthView },
     { path: '/dashboard', component: DashboardView, meta: { requiresAuth: true } },
     { path: '/dashboard/schedule/:scheduleId', name: 'SchedulePage', component: SchedulePage, meta: { requiresAuth: true } },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
@@ -25,8 +23,8 @@ router.beforeEach(async (to, _, next) => {
     await checkAuthStatus();
     const { data: { user } } = await supabase.auth.getUser();
     if (to.matched.some(record => record.meta.requiresAuth) && !user) {
-        next('/auth');
-    } else if (user && to.path === '/auth') {
+        next('/');
+    } else if (user && to.path === '/') {
         next('/');
     } else if (to.name === 'SchedulePage') {
         const schedules = await getSchedules();
@@ -38,7 +36,7 @@ router.beforeEach(async (to, _, next) => {
                 next();
             }
         } else {
-            next('/auth');
+            next('/');
         }
     } else {
         next();
