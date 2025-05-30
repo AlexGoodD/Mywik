@@ -1,15 +1,5 @@
 import { supabase } from '../utils/supabase';
-
-interface Event {
-    schedule_id: string;
-    title: string;
-    description: string;
-    start_time: string;
-    end_time: string;
-    color: string;
-    day_of_week: string[];
-    created_at: string;
-}
+import type { Event } from "../composables/types";
 
 // Función para la creación de eventos
 export const createEvent = async (event: Event) => {

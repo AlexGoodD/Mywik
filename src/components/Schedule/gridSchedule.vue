@@ -1,34 +1,48 @@
 <template>
-  <div class="grid-schedule">
-    <scheduleItem
-      v-for="schedule in userSchedules"
-      :key="schedule.id"
-      :schedule="schedule"
-      @navigate="navigateToSchedule"
-      class="schedule-item"
-    />
+  <div class="grid-container">
+    <div class="grid-schedule">
+      <scheduleItem
+        v-for="schedule in userSchedules"
+        :key="schedule.id"
+        :schedule="schedule"
+        @navigate="navigateToSchedule"
+        @edit="handleEditSchedule"
+        @delete="deleteSchedule"
+        class="schedule-item"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useSchedules } from "../../composables/useSchedules";
 import { useNavigation } from "../../composables/useNavigation";
-const { userSchedules } = useSchedules();
+import { useSchedules } from "../../composables/useSchedules";
 const { navigateToSchedule } = useNavigation();
-import scheduleItem from "./scheduleItem.vue";
+const { userSchedules } = useSchedules();
+import scheduleItem from "./itemSchedule.vue";
+const emits = defineEmits(["editSchedule", "deleteSchedule"]);
+
+function handleEditSchedule(schedule: any) {
+  emits("editSchedule", schedule);
+}
+
+function deleteSchedule(schedule: any) {
+  emits("deleteSchedule", schedule);
+}
 </script>
 
 <style scoped>
+.grid-container {
+  width: calc(100% + 13px);
+  height: calc(100% - 130px);
+}
 .grid-schedule {
   display: flex;
-  gap: 2rem;
-}
-
-.schedule-item {
-  transition: transform 0.5s ease-in-out;
-}
-
-.schedule-item:hover {
-  transform: scale(1.1);
+  flex-wrap: wrap;
+  padding: 1.5rem;
+  column-gap: 1.85rem;
+  row-gap: 1.9rem;
+  align-items: flex-start;
+  overflow: hidden;
 }
 </style>

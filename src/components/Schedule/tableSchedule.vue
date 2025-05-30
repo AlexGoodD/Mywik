@@ -4,14 +4,14 @@
       <thead>
         <tr>
           <th class="time">Hora</th>
-          <th v-for="day in days" :key="day" class="day">{{ day }}</th>
+          <th v-for="day in selectedDays" :key="day" class="day">{{ day }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="slot in timeSlots" :key="slot.start">
           <td class="slot-time">{{ slot.start }} - {{ slot.end }}</td>
           <td
-            v-for="day in days"
+            v-for="day in selectedDays"
             :key="day"
             class="slot-event"
             :style="getEventStyle(slot, day)"
@@ -28,25 +28,17 @@
 import { ref, onMounted, watch } from "vue";
 import { getSchedules } from "../../services/schedule";
 import { generateTimeSlots } from "../../utils/timeSlots";
-import { defineProps } from "vue";
 import {
   fetchEvents,
   getEventStyle,
   getEventTitle,
 } from "../../composables/useEventSlots";
+import type { Schedule } from "../../composables/types";
 
 const props = defineProps<{ scheduleId: string }>();
 
 const timeSlots = ref<{ start: string; end: string }[]>([]);
-const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-
-interface Schedule {
-  id: string;
-  user_id: string;
-  start_date: string;
-  end_date: string;
-  interval: number;
-}
+const selectedDays = ref<string[]>([]);
 
 const schedules = ref<Schedule[]>([]);
 
@@ -60,6 +52,7 @@ const fetchSchedule = async (scheduleId: string) => {
       schedule.end_date,
       schedule.interval
     );
+    selectedDays.value = schedule.days;
   }
 };
 

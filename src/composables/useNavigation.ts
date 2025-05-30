@@ -4,7 +4,8 @@ export function useNavigation() {
     const router = useRouter();
 
     function navigateToSchedule(scheduleId: string) {
-        router.push({ name: "SchedulePage", params: { scheduleId } });
+        const url = router.resolve({ name: "SchedulePage", params: { scheduleId } }).href;
+        window.open(url, '_blank');
     }
 
     return {

@@ -57,7 +57,6 @@ function handleMenuOption(option: { text: string; action: string }) {
   top: 0;
   right: 0;
   left: 218px;
-  background-color: white;
   z-index: 2;
   padding: 0 15px 0 0;
 }

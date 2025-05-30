@@ -51,7 +51,7 @@ function toDashboard() {
 
 async function logout() {
   await signOut();
-  router.push("/auth");
+  router.push("/");
 }
 
 // Abrir barra de búsqueda al presionar "/"
@@ -72,7 +72,7 @@ onMounted(() => {
   flex-direction: column;
   margin-left: 15px;
   width: 185px;
-  background-color: #f7f7f7;
+  background-color: #f3f5f7;
   border: 1px solid #d9d9d9;
   padding: 0.5rem;
   border-radius: 1rem 0 0 1rem;

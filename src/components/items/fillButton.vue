@@ -1,11 +1,11 @@
 <template>
   <button class="create-button" @click="handleClick">
-    <i :class="iconClass" id="icon-create_button"></i> {{ props.buttonText }}
+    <i :class="iconClass" id="icon-create_button"></i> {{ buttonText }}
   </button>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ buttonText: string; iconClass: string }>();
+defineProps<{ buttonText: string; iconClass: string }>();
 const emits = defineEmits(["click"]);
 
 function handleClick() {

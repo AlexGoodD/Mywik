@@ -1,9 +1,5 @@
 import { supabase } from '../utils/supabase';
-
-interface AuthResponse {
-    user: any;
-    error: any;
-}
+import type { AuthResponse } from "../composables/types";
 
 // Registro de usuario
 export const signUp = async (name: string, email: string, password: string): Promise<AuthResponse> => {
@@ -52,31 +48,35 @@ export const signOut = async (): Promise<void> => {
 };
 
 // Función para manejar el inicio de sesión
-export const handleLogin = async (email: string, password: string, router: any, emits: any) => {
+export const handleLogin = async (email: string, password: string, emitCallback: (event: string, message?: string) => void) => {
     try {
         const { error } = await signIn(email, password);
         if (error) {
             throw new Error(error.message);
         }
-        alert("Inicio de sesión exitoso");
-        emits("loginSuccess");
-        router.push("/dashboard");
+        emitCallback("success");
     } catch (error) {
-        alert("Error al iniciar sesión: " + (error as Error).message);
+        const message = (error as Error).message;
+        emitCallback("error", message);
     }
 };
 
 // Función para manejar el registro
-export const handleSignUp = async (name: string, email: string, password: string, emits: any) => {
+export const handleSignUp = async (name: string, email: string, password: string, confirmPassword: string, emitCallback: (event: string, message?: string) => void) => {
+
+    if (password !== confirmPassword) {
+        emitCallback("error", "The passwords do not match.");
+        return;
+    }
+
     try {
         const { error } = await signUp(name, email, password);
         if (error) {
             throw new Error(error.message);
         }
-        emits("registerSuccess");
-        alert("Revisa tu correo para confirmar el correo");
-        emits("switchToLogin");
+        emitCallback("success");
     } catch (error) {
-        alert("Error al registrarse: " + (error as Error).message);
+        const message = (error as Error).message;
+        emitCallback("error", message);
     }
 };
