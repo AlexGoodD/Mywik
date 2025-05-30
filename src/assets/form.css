@@ -1,0 +1,126 @@
+.form-container {
+    width: 400px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border: 1px solid #ccc;
+    background-color: #FCFCFD;
+    color: black;
+    border-radius: 1.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+  .section-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .section-header i {
+    color: #cececf;
+    margin-right: 0.5rem;
+  }
+  .toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .week-info-group,
+  .time-info-group,
+  .general-info-group {
+    background-color: #ffffff;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid #dedede;
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.1);
+    transition: height 0.5s ease-in-out;
+  }
+
+.time-group {
+  display: flex;
+  gap: 1rem;
+}
+  .input-group {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: start;
+  }
+  .input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .input-group input {
+    margin-left: auto;
+    width: 40%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  #group-days {
+    display: flex;
+    flex-direction: column;
+  }
+  .days-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .day-circle {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #496056;
+    background-color: #f2f2f2;
+    font-weight: bold;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    font-size: 0.9rem;
+  }
+  .day-circle.selected {
+    color: white;
+    background-color: #42b883;
+  }
+  .buttons-form-schedule {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+  }
+  #default-button {
+    margin-right: auto;
+  }
+  .fill-button,
+  .outlined-button {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .outlined-button {
+    border: 1px solid #42b883;
+    background-color: white;
+    color: #42b883;
+    justify-content: start;
+    transition: background-color 0.5s ease;
+  }
+  .outlined-button:hover {
+    background-color: rgb(242, 242, 242);
+  }
+  .fill-button {
+    display: block;
+    width: auto;
+    padding: 0 1rem;
+    border: none;
+    background-color: #42b883;
+    transition: background-color 0.5s ease;
+    color: white;
+  }
+  .fill-button:hover {
+    background-color: #238852;
+  }
