@@ -1,14 +1,8 @@
 <!-- App.vue -->
 <template>
-  <div v-if="isLoggedIn" class="container">
-    <Navbar v-if="!$route.meta.hideNavbar" class="navbar-left" />
-    <div class="content">
-      <router-view />
-    </div>
-  </div>
-  <div v-else class="container">
+  <component :is="layoutComponent">
     <router-view />
-  </div>
+  </component>
 
   <!-- Global Overlay -->
   <LoaderOverlay :model-value="overlayVisible" />
@@ -29,26 +23,20 @@
 </template>
 
 <script setup lang="ts">
-import Navbar from "./components/leftNavbar.vue";
-import { isLoggedIn } from "./composables/useAuth";
-import { useAlert } from './composables/useAlert';
-import { useLoaderOverlay } from './composables/useLoaderOverlay';
-import SuccessAlert from "./components/utils/sucessAlert.vue";
-import ErrorAlert from "./components/utils/errorAlert.vue";
-import LoaderOverlay from "@/components/utils/loaderOverlay.vue";
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { useAlert } from './composables/useAlert'
+import { useLoaderOverlay } from './composables/useLoaderOverlay'
+import SuccessAlert from "./components/utils/alerts/sucessAlert.vue"
+import ErrorAlert from "./components/utils/alerts/errorAlert.vue"
+import LoaderOverlay from "@/components/utils/loaderOverlay.vue"
+import MainLayout from "@/components/layouts/mainLayout.vue"
 
-const { message, visible, isHiding, type } = useAlert();
-const { visible: overlayVisible } = useLoaderOverlay();
+const route = useRoute()
+const layoutComponent = computed(() =>
+    route.meta.layout === 'none' ? 'div' : MainLayout
+)
+
+const { message, visible, isHiding, type } = useAlert()
+const { visible: overlayVisible } = useLoaderOverlay()
 </script>
-
-<style scoped>
-.navbar-left {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2;
-}
-.content {
-  overflow: none;
-}
-</style>

@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import { truncateText, formatTime, formatDate } from "../../utils/format";
-import { useNavigation } from "../../composables/useNavigation";
-import { useSchedules } from "../../composables/useSchedules";
+import { truncateText, formatTime, formatDate } from "@/utils/format.ts";
+import { useNavigation } from "@/composables/useNavigation.ts";
+import { useSchedules } from "@/composables/useSchedules.ts";
 
 const { navigateToSchedule } = useNavigation();
 const { userSchedules } = useSchedules();
@@ -44,7 +44,7 @@ function editSchedule(scheduleId: string) {
 
 <style scoped>
 .schedule-list-container {
-  width: calc(100% + 16px);
+  width: 100%;
   overflow-x: auto;
 }
 
@@ -55,9 +55,10 @@ table {
 
 th,
 td {
-  border: 1px solid #d8dadc;
+  border: 1px solid #DBDADF;
   padding: 8px;
   text-align: center;
+  height: 3rem;
 }
 
 /* Eliminar borde izquierdo de la primera columna */
@@ -73,7 +74,7 @@ td:last-child {
 }
 
 th {
-  background-color: #f6f8fa;
+  background-color: #F6F8FA;
 }
 
 .name,

@@ -40,10 +40,9 @@ function selectOption(option: { text: string; action: string }) {
   align-items: center;
   padding: 1rem 1rem;
   background-color: white;
-  border-bottom: 1px solid #d9d9d9;
-  border-right: 1px solid #d9d9d9;
-  border-top: 1px solid #d9d9d9;
+  border-bottom: 1px solid #DBDADF;
   border-radius: 0 1rem 0 0;
+  height: 4rem;
 }
 
 .title {

@@ -1,7 +1,7 @@
 <template>
   <div class="tw-bg-transparent tw-rounded-xl tw-w-full tw-h-full tw-shadow-md tw-flex tw-flex-col tw-gap-3">
     <h2 class="tw-text-white  tw-text-left tw-mt-4 tw-mb-10">Let's create your new account to get started.</h2>
-    <button class="tw-relative tw-border tw-bg-[#1f1f1f] tw-border-[#6D6D6D] tw-rounded-lg tw-flex tw-justify-center tw-gap-x-4 tw-items-center">
+    <button class="tw-relative tw-border tw-bg-[#1f1f1f] tw-border-[#6D6D6D] tw-rounded-lg tw-flex tw-justify-center tw-gap-x-4 tw-items-center tw-transition-colors tw-duration-500 hover:tw-bg-[#444444] hover:tw-border hover:tw-border-[#878787]">
       <i class="fa-brands fa-google tw-text-white"></i>
       <p class="tw-text-white">Continue with Google</p>
     </button>
@@ -40,7 +40,7 @@
         @blur="confirmPasswordField.onBlur"
     />
     <AuthHelper :show="confirmPasswordField.error.value" message="Passwords do not match." />
-    <button class="tw-border tw-bg-[#1f1f1f] tw-border-[#6D6D6D] tw-rounded-lg tw-flex tw-justify-center tw-gap-x-4 tw-items-center" @click="handleSignUpClick">
+    <button class="tw-border tw-bg-[#1f1f1f] tw-border-[#6D6D6D] tw-rounded-lg tw-flex tw-justify-center tw-gap-x-4 tw-items-center tw-transition-colors tw-duration-500 hover:tw-bg-[#444444] hover:tw-border hover:tw-border-[#878787]" @click="handleSignUpClick">
       <p class="tw-text-white">Sign Up</p>
     </button>
     <div class="tw-flex tw-flex-col tw-text-white tw-gap-y-4 tw-text-left tw-text-sm">

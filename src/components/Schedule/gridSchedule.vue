@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { useNavigation } from "../../composables/useNavigation";
-import { useSchedules } from "../../composables/useSchedules";
+import { useNavigation } from "@/composables/useNavigation.ts";
+import { useSchedules } from "@/composables/useSchedules.ts";
 const { navigateToSchedule } = useNavigation();
 const { userSchedules } = useSchedules();
 import scheduleItem from "./itemSchedule.vue";
@@ -33,8 +33,7 @@ function deleteSchedule(schedule: any) {
 
 <style scoped>
 .grid-container {
-  width: calc(100% + 13px);
-  height: calc(100% - 130px);
+  width: 100%;
 }
 .grid-schedule {
   display: flex;

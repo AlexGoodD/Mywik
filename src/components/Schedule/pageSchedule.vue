@@ -9,7 +9,7 @@
 import { ref, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import TableSchedule from "../schedule/tableSchedule.vue";
-import ButtonCreate from "../../components/items/fillButton.vue";
+import ButtonCreate from "../utils/buttons/fillButton.vue";
 import formEvents from "../events/formEvents.vue";
 const showFormEvent = ref(false);
 const route = useRoute();

@@ -1,8 +1,9 @@
 <template>
   <div class="navbar">
-    <div class="user-info">
+    <div class="navbar-userinfo">
       <p>{{ userName }}</p>
     </div>
+    <div class="navbar-searchbar">
     <div class="search-bar">
       <span class="search-icon">
         <i class="fas fa-search"></i>
@@ -15,28 +16,33 @@
         @blur="isSearchActive = false"
       />
     </div>
+    </div>
+    <div class="navbar-items">
     <div class="nav-items">
       <p v-for="item in navItems" :key="item.text" @click="item.action">
         <i :class="item.icon" id="item-icon"></i> {{ item.text }}
       </p>
+    </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useUser } from "../composables/useUser";
+import { useUser } from "@/composables/useUser.ts";
 import { useRouter } from "vue-router";
 const { userName } = useUser();
-import { signOut } from "../services/auth";
+import { signOut } from "@/services/auth.ts";
 const router = useRouter();
 
 const navItems = [
-  { text: "Inicio", icon: "fas fa-home", action: toHome },
-  { text: "Mis horarios", icon: "fas fa-calendar-alt", action: toDashboard },
-  { text: "Salir", icon: "fas fa-sign-out-alt", action: logout },
-  { text: "Invitar amigos", icon: "fas fa-user-plus", action: () => {} },
-  { text: "Ayuda y primeros pasos", icon: "fas fa-question-circle", action: () => {} },
+  { text: "Dashboard", icon: "fas fa-gauge", action: toHome },
+  { text: "Schedules", icon: "fas fa-table", action: toDashboard },
+  { text: "Shared Schedules", icon: "fas fa-link", action: logout },
+  { text: "Export History", icon: "fas fa-download", action: () => {} },
+  { text: "Settings", icon: "fas fa-gear", action: () => {} },
+  { text: "Help and first steps", icon: "fas fa-question-circle", action: () => {} },
+  { text: "Logout", icon: "fas fa-right-from-bracket", action: () => {} },
 ];
 
 const isSearchActive = ref(false);
@@ -70,19 +76,26 @@ onMounted(() => {
 .navbar {
   display: flex;
   flex-direction: column;
-  margin-left: 15px;
-  width: 185px;
-  background-color: #f3f5f7;
-  border: 1px solid #d9d9d9;
-  padding: 0.5rem;
+  width: 14rem;
+  background-color: #F3F5F7;
+  border-right: 1px solid #DBDADF;
+  border-left: 1px solid #DBDADF;
+  border-bottom: 1px solid #DBDADF;
   border-radius: 1rem 0 0 1rem;
-  height: calc(100% - 47px);
 }
 
-.user-info {
-  margin-bottom: 2rem;
+.navbar-userinfo {
+  margin-bottom: 1rem;
   text-align: center;
   color: black;
+  border-bottom: 1px solid #DBDADF;
+  padding: 1rem;
+  height: 4rem;
+
+}
+
+.navbar-searchbar, .navbar-items {
+  padding: 0 0.5rem;
 }
 
 .search-bar {
@@ -112,23 +125,22 @@ onMounted(() => {
 .nav-items {
   list-style: none;
   padding: 0 0.5rem;
-  margin: 0;
   flex-grow: 1;
-  margin-top: 1rem;
+  margin: 1rem 0 0;
 }
 
 .nav-items p {
   cursor: pointer;
   text-align: left;
-  color: #575757;
-  font-size: 0.75rem;
+  color: #000000;
+  font-size: 0.9rem;
   margin-bottom: 1.5rem;
   transition: color 0.5s ease, transform 0.5s ease-in-out;
 }
 
 .nav-items p:hover {
-  color: #858585;
-  transform: translateX(10px);
+  color: rgba(0, 0, 0, 0.5);
+  transform: translateX(0.5rem);
 }
 
 #item-icon {
