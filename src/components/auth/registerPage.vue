@@ -65,18 +65,6 @@
   </span>
       </p>
     </div>
-    <SuccessAlert
-        v-if="alertVisible && alertType === 'success'"
-        :message="alertMessage"
-        :visible="alertVisible"
-        :isHiding="alertHiding"
-    />
-    <ErrorAlert
-        v-else-if="alertVisible && alertType === 'error'"
-        :message="alertMessage"
-        :visible="alertVisible"
-        :isHiding="alertHiding"
-    />
   </div>
 </template>
 
@@ -86,18 +74,8 @@ import { handleSignUp } from "@/services/auth.ts";
 import { useFormField } from '@/composables/useFormField.ts';
 import { useAlert } from '@/composables/useAlert';
 import AuthHelper  from "@/components/utils/authHelper.vue"
-import ErrorAlert from '@/components/utils/errorAlert.vue';
-import SuccessAlert from '@/components/utils/sucessAlert.vue';
 import BaseInput from "@/components/forms/baseInput.vue";
 import PasswordInput from "@/components/forms/passwordInput.vue";
-
-const {
-  message: alertMessage,
-  visible: alertVisible,
-  isHiding: alertHiding,
-  type: alertType,
-  show: showAlert
-} = useAlert();
 
 const usernameField = useFormField('', (val) => val.trim().length >= 9);
 const emailField = useFormField('', 'email');
@@ -117,9 +95,9 @@ async function handleSignUpClick() {
       (event: string, message?: string) => {
         if (event === "error" && message) {
           errorMessage.value = message;
-          showAlert(errorMessage.value, 'error');
+          useAlert().show(errorMessage.value, 'error');
         } else if (event === "success") {
-          showAlert('Registration successful! Please check your email to verify your account.', 'success');
+          useAlert().show('Registration successful! Please check your email to verify your account.', 'success');
         }
       }
   );

@@ -37,51 +37,40 @@
   </span>
       </p>
     </div>
-    <SuccessAlert
-        v-if="alertVisible && alertType === 'success'"
-        :message="alertMessage"
-        :visible="alertVisible"
-        :isHiding="alertHiding"
-    />
-    <ErrorAlert
-        v-else-if="alertVisible && alertType === 'error'"
-        :message="alertMessage"
-        :visible="alertVisible"
-        :isHiding="alertHiding"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import {useRouter} from "vue-router";
 import { handleLogin } from "@/services/auth";
 import { useFormField } from '@/composables/useFormField.ts';
 import { useAlert } from '@/composables/useAlert';
+import { useLoaderOverlay } from '@/composables/useLoaderOverlay';
 import BaseInput from "@/components/forms/baseInput.vue";
 import PasswordInput from "@/components/forms/passwordInput.vue";
-import ErrorAlert from "@/components/utils/errorAlert.vue";
-import SuccessAlert from "@/components/utils/sucessAlert.vue";
-
-const {
-  message: alertMessage,
-  visible: alertVisible,
-  isHiding: alertHiding,
-  type: alertType,
-  show: showAlert
-} = useAlert();
 
 const emailField = useFormField('', 'email');
 const passwordField = useFormField('', 'password');
 const emits = defineEmits(["loginSuccess", "switchToRegister"]);
 const errorMessage = ref<string | null>(null);
 
+const { show, hide } = useLoaderOverlay();
+const router = useRouter();
+
 async function handleLoginClick() {
+  show();
   await handleLogin(emailField.value.value, passwordField.value.value, (event: string, message?: string) => {
+    hide();
     if (event === "error" && message) {
       errorMessage.value = message;
-      showAlert(errorMessage.value, 'error');
+      useAlert().show(errorMessage.value, 'error');
     } else if (event === "success") {
-      showAlert('Login successful!', 'success');
+      useAlert().show('Login successful!', 'success');
+      setTimeout(() => {
+        hide();
+        router.push('/dashboard');
+      }, 500);
     }
   });
 }
