@@ -8,7 +8,7 @@
           :menuOptions="topbarOptions"
           @selectOption="handleMenuOption"
       />
-      <main class="tw-overflow-auto">
+      <main>
         <router-view />
       </main>
     </div>

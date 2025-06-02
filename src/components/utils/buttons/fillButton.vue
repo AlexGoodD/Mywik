@@ -24,13 +24,15 @@ function handleClick() {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
   font-size: 0.7rem;
   padding: 0.5rem 1rem;
+  height: 2.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .create-button:hover {
-  background-color: #4f4f4f;
+  background-color: #535353;
 }
 
 #icon-create_button {

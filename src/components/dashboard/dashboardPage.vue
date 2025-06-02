@@ -12,8 +12,8 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import Toolbar from "@/components/dashboard/dashboardToolbar.vue"
-import gridSchedule from "../../components/schedule/gridSchedule.vue";
-import listSchedule from "../../components/schedule/listSchedule.vue";
+import gridSchedule from "@/components/schedule/gridSchedule.vue";
+import listSchedule from "@/components/schedule/listSchedule.vue";
 
 const isGridView = ref(true);
 

@@ -2,15 +2,24 @@
   <div class="navbar">
     <div class="button-container">
       <div class="left-buttons">
-        <ViewButton v-model="currentView" @update:modelValue="emitToggleView" />
         <DropdownButton
+            id="view"
+            v-model="currentView"
+            :options="[
+    { value: 'grid', label: 'Grid View', icon: 'fas fa-grip' },
+    { value: 'list', label: 'Table View', icon: 'fas fa-table' }
+  ]"
+        />
+        <SelectOptsButton
+            id="filter"
             buttonText="Filtrar"
             iconClass="fas fa-filter"
             :options="filterOptions"
             @select="emitFilterBy"
         />
 
-        <DropdownButton
+        <SelectOptsButton
+            id="sort"
             buttonText="Ordenar"
             iconClass="fas fa-sort"
             :options="sortOptions"
@@ -29,10 +38,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import {ref, watch} from "vue";
 import fillButton from "@/components/utils/buttons/fillButton.vue";
-import ViewButton from "@/components/utils/buttons/viewButton.vue";
 import DropdownButton from "@/components/utils/buttons/dropdownButton.vue";
+import SelectOptsButton from "@/components/utils/buttons/selectOptsButton.vue";
 
 const emits = defineEmits(["createSchedule", "toggleView", "filterBy", "sortBy"]);
 const showSortMenu = ref(false);
@@ -44,10 +53,9 @@ function emitCreateSchedule() {
   emits("createSchedule");
 }
 
-function emitToggleView(viewType: 'grid' | 'list') {
-  currentView.value = viewType
-  emits('toggleView', viewType)
-}
+watch(currentView, (newView) => {
+  emits('toggleView', newView);
+});
 
 function emitFilterBy(criteria: string) {
   emits("filterBy", criteria);
@@ -98,30 +106,4 @@ const sortOptions = [
   margin-left: auto;
 }
 
-.dropdown {
-  position: relative;
-}
-
-.dropdown-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: white;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.dropdown-content p {
-  margin: 0;
-  padding: 0.5rem 1rem;
-  font-size: 0.7rem;
-  color: black;
-  cursor: pointer;
-}
-
-.dropdown-content p:hover {
-  background-color: #f0f0f0;
-}
 </style>
