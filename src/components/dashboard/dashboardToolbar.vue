@@ -12,7 +12,7 @@
         />
         <SelectOptsButton
             id="filter"
-            buttonText="Filtrar"
+            buttonText="Filter"
             iconClass="fas fa-filter"
             :options="filterOptions"
             @select="emitFilterBy"
@@ -20,7 +20,7 @@
 
         <SelectOptsButton
             id="sort"
-            buttonText="Ordenar"
+            buttonText="Sorter"
             iconClass="fas fa-sort"
             :options="sortOptions"
             @select="emitSortBy"
@@ -28,7 +28,7 @@
       </div>
       <div class="right-button">
         <fillButton
-          buttonText="Crear Horario"
+          buttonText="Add New"
           iconClass="fas fa-plus"
           @click="emitCreateSchedule"
         />

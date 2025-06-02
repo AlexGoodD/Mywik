@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown" id="view-dropdown">
+  <div class="dropdown" id="view-dropdown" ref="dropdownRef">
     <button class="view-button" @click="toggleViewMenu">
       <div class="button-content">
         <i :class="currentOption?.icon"></i>
@@ -10,7 +10,9 @@
         <i class="fas fa-caret-down"></i>
       </div>
     </button>
-    <div v-if="showViewMenu" class="dropdown-content">
+    <transition name="dropdown-expand">
+      <div v-if="showViewMenu" class="dropdown-content">
+        <transition-group name="dropdown-item" tag="div">
       <span
           v-for="option in filteredOptions"
           :key="option.value"
@@ -18,13 +20,16 @@
       >
         <i :class="option.icon"></i> {{ option.label }}
       </span>
-    </div>
+        </transition-group>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmits, defineProps } from 'vue'
+import {computed, defineEmits, defineProps, ref} from 'vue'
 import { useToolbar } from '@/composables/useToolbar'
+import { onClickOutside } from '@vueuse/core'
 
 type Option = {
   value: string
@@ -43,6 +48,9 @@ const emits = defineEmits<{
 }>()
 
 const { toggleElement, isActive } = useToolbar()
+
+const dropdownRef = ref(null)
+
 const showViewMenu = computed(() => isActive(props.id))
 
 const currentOption = computed(() =>
@@ -61,6 +69,10 @@ function selectOption(value: string) {
   emits('update:modelValue', value)
   toggleElement(props.id)
 }
+
+onClickOutside(dropdownRef, () => {
+  if (isActive(props.id)) toggleElement(props.id)
+})
 </script>
 
 <style scoped>
@@ -148,5 +160,33 @@ function selectOption(value: string) {
   cursor: pointer;
   width: 100%;
   font-weight: 500;
+}
+
+.dropdown-expand-enter-active,
+.dropdown-expand-leave-active {
+  transition: all 0.2s ease-out;
+}
+.dropdown-expand-enter-from,
+.dropdown-expand-leave-to {
+  opacity: 0;
+  transform: scaleY(0.95);
+}
+.dropdown-expand-enter-to,
+.dropdown-expand-leave-from {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* ANIMACIÓN DE LOS ÍTEMS */
+.dropdown-item-enter-active {
+  transition: all 0.25s ease-out;
+}
+.dropdown-item-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.dropdown-item-enter-to {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

@@ -25,7 +25,7 @@ function handleClick() {
   align-items: center;
   cursor: pointer;
   transition: background-color 0.5s ease;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   padding: 0.5rem 1rem;
   height: 2.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
